@@ -321,59 +321,41 @@ section{ position:relative; }
 
 .stack-card{
   position:sticky;
-  background:var(--white);
-  border:1px solid var(--line);
+  aspect-ratio:4/3;
+  background:var(--navy);
   border-radius:12px;
-  padding:46px;
-  display:grid;
-  grid-template-columns: auto 1fr;
-  gap:34px;
-  box-shadow: 0 14px 28px -18px rgba(14,30,64,0.16);
-  min-height:280px;
+  overflow:hidden;
+  box-shadow: 0 14px 28px -18px rgba(14,30,64,0.28);
 }
-@media (max-width:640px){
-  .stack-card{ grid-template-columns:1fr; padding:32px 26px; min-height:0; }
-}
+@media (max-width:640px){ .stack-card{ aspect-ratio:4/5; } }
 .stack-card:nth-child(1){ top:110px; margin-bottom:20px; }
 .stack-card:nth-child(2){ top:138px; margin-bottom:20px; }
 .stack-card:nth-child(3){ top:166px; margin-bottom:0; }
 
-.stack-num{
-  position:relative;
-  font-size:13px;
-  font-weight:600;
-  color:var(--brand);
-  display:flex; flex-direction:column; align-items:flex-start;
+/* Image slot: add <img class="svc-photo" src="…" alt="…"> inside .svc-media */
+.svc-media{ position:absolute; inset:0; }
+.svc-photo{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  object-fit:cover;
+  transform:scale(1);
+  transition:transform 0.6s cubic-bezier(0.16,1,0.3,1);
+  will-change:transform;
 }
-.stack-num .ic{
-  width:52px; height:52px;
-  background:var(--brand-dim);
-  border-radius:8px;
-  display:flex; align-items:center; justify-content:center;
-}
-.stack-num .ic svg{ width:26px; height:26px; }
-.stack-card .corner-num{
+.stack-card:hover .svc-photo{ transform:scale(1.06); }
+@media (prefers-reduced-motion: reduce){ .svc-photo{ transition:none; } .stack-card:hover .svc-photo{ transform:none; } }
+
+/* White caption panel pinned to the bottom of the card */
+.svc-panel{
   position:absolute;
-  right:22px;
-  bottom:18px;
-  font-size:13px;
-  font-weight:600;
-  color:var(--brand);
-  opacity:0.55;
+  left:24px; right:24px; bottom:24px;
+  background:var(--white);
+  border-radius:8px;
+  padding:26px 28px;
 }
-@media (max-width:640px){
-  .stack-card .corner-num{ right:26px; bottom:26px; }
-}
-.stack-card h3{ font-size:19px; margin-bottom:8px; font-weight:600; }
-.stack-card p{ color:var(--muted); font-size:15.5px; line-height:1.6; margin-bottom:18px; max-width:52ch; }
-.tag-list{ display:flex; flex-wrap:wrap; gap:10px; list-style:none; margin:0; padding:0; }
-.tag-list li{
-  font-size:13px; font-weight:500;
-  padding:8px 14px;
-  border:1px solid var(--line);
-  border-radius:6px;
-  color:var(--ink);
-}
+@media (max-width:640px){ .svc-panel{ left:14px; right:14px; bottom:14px; padding:20px; } }
+.svc-panel h3{ font-size:clamp(20px, 2vw, 24px); margin-bottom:8px; font-weight:600; }
+.svc-panel p{ color:var(--muted); font-size:15px; line-height:1.55; margin:0; }
 
 .stack-side{
   position:relative;
@@ -947,51 +929,33 @@ a:focus-visible, button:focus-visible{
 
         <div>
           <div class="stack-card reveal-up" style="--rd:0s">
-            <div class="stack-num">
-              <div class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="#0055FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="svc-media">
+              <div class="grid-field" style="mask-image:none; -webkit-mask-image:none;"></div>
             </div>
-            <div>
+            <div class="svc-panel">
               <h3>Manpower Recruitment</h3>
               <p>We source, vet, and deploy qualified professionals tailored to your operational and regulatory requirements. Our recruitment process prioritizes competence, compliance, and reliability.</p>
-              <ul class="tag-list">
-                <li>Skilled &amp; semi-skilled personnel</li>
-                <li>Industry-specific recruitment</li>
-                <li>Compliance &amp; background verification</li>
-              </ul>
             </div>
-            <span class="corner-num">01</span>
           </div>
 
           <div class="stack-card reveal-up" style="--rd:0.1s">
-            <div class="stack-num">
-              <div class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M22 10v6M2 10l10-5 10 5-10 5-10-5Zm4 2v6c0 1 2.7 3 6 3s6-2 6-3v-6" stroke="#0055FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="svc-media">
+              <div class="grid-field" style="mask-image:none; -webkit-mask-image:none;"></div>
             </div>
-            <div>
+            <div class="svc-panel">
               <h3>Industry Training Programs</h3>
               <p>We deliver practical, standards-aligned training designed to improve performance, reduce risk, and build workforce competence.</p>
-              <ul class="tag-list">
-                <li>Professional &amp; safety training</li>
-                <li>On-site &amp; off-site programs</li>
-                <li>Compliance-focused curriculum</li>
-              </ul>
             </div>
-            <span class="corner-num">02</span>
           </div>
 
           <div class="stack-card reveal-up" style="--rd:0.2s">
-            <div class="stack-num">
-              <div class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M3 3h2l2.6 13.4a2 2 0 0 0 2 1.6h8.8a2 2 0 0 0 2-1.6L22 8H6M9 21a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm9 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" stroke="#0055FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="svc-media">
+              <div class="grid-field" style="mask-image:none; -webkit-mask-image:none;"></div>
             </div>
-            <div>
+            <div class="svc-panel">
               <h3>Procurement Support</h3>
               <p>Our procurement services ensure quality sourcing, proper documentation, and adherence to professional procurement standards — minimizing delays and compliance risks.</p>
-              <ul class="tag-list">
-                <li>Vendor sourcing &amp; evaluation</li>
-                <li>Procurement documentation</li>
-                <li>Quality &amp; compliance assurance</li>
-              </ul>
             </div>
-            <span class="corner-num">03</span>
           </div>
         </div>
       </div>
