@@ -313,6 +313,8 @@ section{ position:relative; }
 .svc-head .lede{ max-width:40ch; margin-top:18px; }
 
 .stack{
+  /* Shared height so the left image and the right cards line up as they stack */
+  --svc-h: clamp(380px, 36vw, 470px);
   display:grid;
   grid-template-columns: 0.85fr 1.15fr;
   gap:64px;
@@ -321,16 +323,16 @@ section{ position:relative; }
 
 .stack-card{
   position:sticky;
-  aspect-ratio:4/3;
+  height:var(--svc-h);
   background:var(--navy);
   border-radius:12px;
   overflow:hidden;
   box-shadow: 0 14px 28px -18px rgba(14,30,64,0.28);
 }
-@media (max-width:640px){ .stack-card{ aspect-ratio:4/5; } }
-.stack-card:nth-child(1){ top:110px; margin-bottom:20px; }
-.stack-card:nth-child(2){ top:138px; margin-bottom:20px; }
-.stack-card:nth-child(3){ top:166px; margin-bottom:0; }
+@media (max-width:640px){ .stack-card{ height:auto; aspect-ratio:4/5; } }
+/* All cards pin at the same line as the left image, so each new card covers the last one in sync */
+.stack-card{ top:110px; margin-bottom:20px; }
+.stack-card:last-child{ margin-bottom:0; }
 
 /* Image slot: add <img class="svc-photo" src="…" alt="…"> inside .svc-media */
 .svc-media{ position:absolute; inset:0; }
@@ -362,7 +364,7 @@ section{ position:relative; }
 }
 .stack-side-img{
   position:sticky; top:110px;
-  aspect-ratio:4/5;
+  height:var(--svc-h);
   background:var(--navy);
   overflow:hidden;
   border:1px solid var(--line);
