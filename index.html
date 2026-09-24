@@ -1392,7 +1392,7 @@ a:focus-visible, button:focus-visible{
       body:JSON.stringify(data)
     }).then(function(r){ return r.json().then(function(j){ if(!r.ok || String(j.success)!=='true') throw new Error(j.message||'failed'); }); })
       .then(function(){ form.reset(); say('Thank you — your message has been sent. We\'ll get back to you within one business day.','ok'); })
-      .catch(function(){ say('Sorry, your message could not be sent. Please email us at Info@nielvid.com or call +44 7946 146238.','err'); })
+      .catch(function(err){ if(window.console) console.error('Contact form failed:', err && err.message); say('Sorry, your message could not be sent. Please email us at Info@nielvid.com or call +44 7946 146238.','err'); })
       .finally(function(){ btn.disabled=false; btn.textContent='Send message'; });
   });
 })();
