@@ -272,16 +272,19 @@ section{ position:relative; }
 
 .stat-strip{
   margin-top:88px;
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
+  display:flex;
+  justify-content:space-between;
+  gap:24px;
   border-top:1px solid var(--line);
 }
-@media (max-width:760px){ .stat-strip{ grid-template-columns:repeat(2,1fr); } }
-.stat-strip > div{
-  padding:30px 26px 0 0;
-  border-right:1px solid var(--line);
+.stat-strip > div{ padding-top:30px; }
+/* Divider lines sit exactly midway between one stat's text and the next */
+.stat-strip > .stat-div{ padding:0; width:1px; flex:none; align-self:stretch; background:var(--line); }
+@media (max-width:760px){
+  .stat-strip{ display:grid; grid-template-columns:repeat(2,1fr); gap:0; row-gap:8px; }
+  .stat-strip > .stat-div{ display:none; }
+  .stat-strip > div:nth-child(4n+3){ border-left:1px solid var(--line); padding-left:20px; }
 }
-.stat-strip > div:last-child{ border-right:none; }
 .stat-strip strong{ display:block; font-size:28px; font-weight:600; letter-spacing:-0.01em; }
 .stat-strip span{ font-size:14px; color:var(--muted); }
 
@@ -914,8 +917,11 @@ a:focus-visible, button:focus-visible{
 
       <div class="stat-strip">
         <div class="reveal-up" style="--rd:0s"><strong>98%</strong><span>On-time personnel deployment</span></div>
+        <div class="stat-div" aria-hidden="true"></div>
         <div class="reveal-up" style="--rd:0.08s"><strong>60+</strong><span>Active client engagements</span></div>
+        <div class="stat-div" aria-hidden="true"></div>
         <div class="reveal-up" style="--rd:0.16s"><strong>12</strong><span>Sectors served across Nigeria &amp; UK</span></div>
+        <div class="stat-div" aria-hidden="true"></div>
         <div class="reveal-up" style="--rd:0.24s"><strong>Zero</strong><span>Major compliance incidents to date</span></div>
       </div>
     </div>
