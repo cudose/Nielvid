@@ -165,7 +165,8 @@ header{
   text-decoration:none;
   color:var(--ink);
 }
-.brand img{ height:22px; width:auto; }
+/* Show only the blue icon from the full logo (its white wordmark is invisible on the light nav) */
+.brand img{ height:22px; width:21px; object-fit:cover; object-position:left center; }
 .navlinks{
   display:flex;
   gap:28px;
