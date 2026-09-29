@@ -322,6 +322,8 @@ section{ position:relative; }
   will-change:transform;
 }
 .stack-card:hover .svc-photo{ transform:scale(1.06); }
+/* Photos whose subjects sit low: render taller and shift up so they clear the white panel */
+.svc-photo-lift{ top:-24%; height:124%; }
 @media (prefers-reduced-motion: reduce){ .svc-photo{ transition:none; } .stack-card:hover .svc-photo{ transform:none; } }
 
 /* White caption panel pinned to the bottom of the card */
@@ -934,7 +936,7 @@ a:focus-visible, button:focus-visible{
 
           <div class="stack-card reveal-up" style="--rd:0.1s">
             <div class="svc-media">
-              <img class="svc-photo" src="services/equipment.jpg" alt="Crane, excavator, forklift, generator and manlift on an industrial project site" loading="lazy">
+              <img class="svc-photo svc-photo-lift" src="services/equipment.jpg" alt="Crane, excavator, forklift, generator and manlift on an industrial project site" loading="lazy">
             </div>
             <div class="svc-panel">
               <h3>Equipment Leasing &amp; Rental</h3>
@@ -964,7 +966,7 @@ a:focus-visible, button:focus-visible{
 
           <div class="stack-card reveal-up" style="--rd:0.1s">
             <div class="svc-media">
-              <img class="svc-photo" src="services/marine.jpg" alt="Offshore crew moving cargo on a supply vessel deck with a platform in the distance" loading="lazy">
+              <img class="svc-photo svc-photo-lift" src="services/marine.jpg" alt="Offshore crew moving cargo on a supply vessel deck with a platform in the distance" loading="lazy">
             </div>
             <div class="svc-panel">
               <h3>Marine Logistics &amp; Offshore Support</h3>
