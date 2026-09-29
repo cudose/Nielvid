@@ -462,11 +462,47 @@ section{ position:relative; }
 .video-frame{
   margin-top:56px;
   position:relative;
-  aspect-ratio:16/8;
+  aspect-ratio:16/9;
   background:var(--navy);
   overflow:hidden;
   border:1px solid var(--line);
   border-radius:12px;
+}
+/* ---- Company overview player ---- */
+.ov-video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; background:#000; }
+.ov-shade{ position:absolute; inset:0; background:linear-gradient(180deg, rgba(10,21,48,0.35), rgba(10,21,48,0.6)); transition:opacity .35s ease; pointer-events:none; }
+.video-frame.is-started .ov-shade{ opacity:0; }
+.video-frame .play-btn{ z-index:2; transition:opacity .25s ease; }
+.video-frame.is-playing .play-btn{ opacity:0; pointer-events:none; }
+.video-frame.is-started .play-btn .circle{ background:rgba(10,21,48,0.35); backdrop-filter:blur(4px); }
+.ov-bar{
+  position:absolute; left:0; right:0; bottom:0; z-index:3;
+  display:flex; align-items:center; gap:12px;
+  padding:28px 16px 14px;
+  background:linear-gradient(0deg, rgba(0,0,0,0.6), rgba(0,0,0,0));
+  color:#fff;
+  opacity:0; transform:translateY(6px);
+  transition:opacity .25s ease, transform .25s ease;
+  pointer-events:none;
+}
+.video-frame.is-started .ov-bar{ opacity:1; transform:none; pointer-events:auto; }
+/* while playing, tuck the controls away until the viewer moves over the video */
+.video-frame.is-playing.is-idle .ov-bar{ opacity:0; transform:translateY(6px); }
+.video-frame.is-playing.is-idle{ cursor:none; }
+.ov-btn{ flex:none; width:36px; height:36px; border-radius:50%; border:none; background:transparent; color:#fff; cursor:pointer; display:grid; place-items:center; transition:background .2s; }
+.ov-btn:hover, .ov-btn:focus-visible{ background:rgba(255,255,255,0.16); outline:none; }
+.ov-btn svg{ width:20px; height:20px; fill:currentColor; }
+.ov-play .i-pause, .video-frame.is-playing .ov-play .i-play{ display:none; }
+.video-frame.is-playing .ov-play .i-pause{ display:block; }
+.ov-mute .i-muted, .video-frame.is-muted .ov-mute .i-sound{ display:none; }
+.video-frame.is-muted .ov-mute .i-muted{ display:block; }
+.ov-seek{ flex:1; min-width:60px; height:4px; accent-color:var(--brand); cursor:pointer; }
+.ov-time{ flex:none; font-size:12.5px; font-variant-numeric:tabular-nums; opacity:0.9; }
+.video-frame:fullscreen{ border-radius:0; border:none; }
+@media (max-width:640px){
+  .ov-bar{ gap:6px; padding:22px 8px 8px; }
+  .ov-time{ display:none; }
+  .play-btn .circle{ width:64px; height:64px; }
 }
 .play-btn{
   position:absolute; inset:0;
@@ -1050,13 +1086,31 @@ a:focus-visible, button:focus-visible{
       <h2 class="h-lg reveal-heading">Compliant manpower, industry ready training &amp; reliable procurement</h2>
       <p class="lede">One partner across the full chain, so operators spend less time chasing paperwork and vendors, and more time running the job safely and on schedule.</p>
 
-      <div class="video-frame reveal-up">
-        <div class="grid-field" style="mask-image:none; -webkit-mask-image:none;"></div>
-        <button class="play-btn" aria-label="Play company overview video">
+      <div class="video-frame reveal-up" id="overview-player">
+        <video class="ov-video" preload="none" playsinline poster="media/hero-poster.jpg">
+          <source src="media/overview.mp4" type="video/mp4">
+        </video>
+        <div class="ov-shade" aria-hidden="true"></div>
+        <button class="play-btn" type="button" aria-label="Play company overview video">
           <span class="circle">
             <svg viewBox="0 0 24 24" fill="none"><path d="M7 4v16l14-8L7 4Z" fill="#fff"/></svg>
           </span>
         </button>
+        <div class="ov-bar">
+          <button class="ov-btn ov-play" type="button" aria-label="Play">
+            <svg class="i-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="i-pause" viewBox="0 0 24 24"><path d="M8 5h3v14H8zM13 5h3v14h-3z"/></svg>
+          </button>
+          <input class="ov-seek" type="range" min="0" max="1000" value="0" step="1" aria-label="Seek">
+          <span class="ov-time">0:00 / 0:00</span>
+          <button class="ov-btn ov-mute" type="button" aria-label="Mute">
+            <svg class="i-sound" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4zm12.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg>
+            <svg class="i-muted" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4zm15.6 3 2.1-2.1-1.4-1.4-2.1 2.1-2.1-2.1-1.4 1.4 2.1 2.1-2.1 2.1 1.4 1.4 2.1-2.1 2.1 2.1 1.4-1.4-2.1-2.1z"/></svg>
+          </button>
+          <button class="ov-btn ov-full" type="button" aria-label="Full screen">
+            <svg viewBox="0 0 24 24"><path d="M4 9V4h5v2H6v3H4zm10-5h6v5h-2V6h-4V4zM6 15v3h3v2H4v-5h2zm12 3v-3h2v5h-5v-2h3z"/></svg>
+          </button>
+        </div>
       </div>
 
       <p class="trust-label">They trust us</p>
@@ -1507,6 +1561,44 @@ a:focus-visible, button:focus-visible{
     if(v.paused){ var p=v.play(); if(p&&p.catch) p.catch(function(){}); set(false); } else { v.pause(); set(true); }
   });
   if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches){ v.removeAttribute('autoplay'); v.pause(); set(true); }
+})();
+</script>
+<script>
+// Company overview video: custom controls with sound, mute, seek and full screen
+(function(){
+  var f=document.getElementById('overview-player'); if(!f) return;
+  var v=f.querySelector('.ov-video'), big=f.querySelector('.play-btn'), pb=f.querySelector('.ov-play'),
+      mb=f.querySelector('.ov-mute'), fb=f.querySelector('.ov-full'), seek=f.querySelector('.ov-seek'), tm=f.querySelector('.ov-time');
+  var idle;
+  function fmt(t){ t=Math.max(0,Math.floor(t||0)); return Math.floor(t/60)+':'+('0'+(t%60)).slice(-2); }
+  function sync(){
+    f.classList.toggle('is-playing', !v.paused && !v.ended);
+    f.classList.toggle('is-muted', v.muted);
+    pb.setAttribute('aria-label', v.paused ? 'Play' : 'Pause');
+    mb.setAttribute('aria-label', v.muted ? 'Unmute' : 'Mute');
+    big.setAttribute('aria-label', v.ended ? 'Replay company overview video' : 'Play company overview video');
+  }
+  function toggle(){
+    if(v.paused || v.ended){ f.classList.add('is-started'); var p=v.play(); if(p&&p.catch) p.catch(function(){}); }
+    else v.pause();
+  }
+  function wake(){ f.classList.remove('is-idle'); clearTimeout(idle); if(!v.paused) idle=setTimeout(function(){ f.classList.add('is-idle'); }, 2500); }
+  big.addEventListener('click', toggle);
+  pb.addEventListener('click', toggle);
+  v.addEventListener('click', toggle);
+  mb.addEventListener('click', function(){ v.muted=!v.muted; sync(); });
+  fb.addEventListener('click', function(){
+    if(document.fullscreenElement){ document.exitFullscreen(); return; }
+    if(f.requestFullscreen) f.requestFullscreen();
+    else if(v.webkitEnterFullscreen) v.webkitEnterFullscreen();   // iPhone
+  });
+  seek.addEventListener('input', function(){ if(v.duration) v.currentTime=seek.value/1000*v.duration; });
+  v.addEventListener('timeupdate', function(){ if(v.duration){ seek.value=Math.round(v.currentTime/v.duration*1000); tm.textContent=fmt(v.currentTime)+' / '+fmt(v.duration); } });
+  v.addEventListener('loadedmetadata', function(){ tm.textContent=fmt(0)+' / '+fmt(v.duration); });
+  ['play','pause','ended','volumechange'].forEach(function(e){ v.addEventListener(e, function(){ sync(); wake(); }); });
+  f.addEventListener('mousemove', wake);
+  f.addEventListener('focusin', wake);
+  sync();
 })();
 </script>
 </body>
