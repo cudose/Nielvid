@@ -176,8 +176,19 @@ header{
   font-size:13.5px;
   font-weight:500;
 }
-.navlinks a{ text-decoration:none; color:var(--ink); opacity:0.75; transition:opacity .15s; }
-.navlinks a:hover{ opacity:1; }
+.navlinks a{
+  text-decoration:none; color:var(--ink); opacity:0.75;
+  transition:color .2s, opacity .2s;
+  display:inline-flex; flex-direction:column; align-items:center;
+  text-underline-offset:6px; text-decoration-thickness:2px;
+}
+/* invisible bold copy reserves the bold width so neighbouring links don't shift */
+.navlinks a::after{ content:attr(data-label); font-weight:600; height:0; visibility:hidden; overflow:hidden; }
+.navlinks a:hover,
+.navlinks a.is-active,
+.navlinks a[aria-current="page"]{
+  opacity:1; color:var(--brand); font-weight:600; text-decoration:underline;
+}
 .nav-cta{ display:flex; align-items:center; gap:18px; }
 .nav-cta .btn-primary{ border-radius:999px; padding:9px 18px; font-size:13px; }
 .burger{ display:none; }
@@ -777,7 +788,6 @@ a:focus-visible, button:focus-visible{
 }
 
 /* ================= About page ================= */
-.navlinks a[aria-current="page"]{ color:var(--brand); }
 .page-hero{ position:relative; padding:88px 0 72px; overflow:hidden; border-bottom:1px solid var(--line); }
 @media (max-width:720px){ .page-hero{ padding:64px 0 48px; } }
 .page-hero .wrap{ position:relative; z-index:2; }
@@ -836,9 +846,9 @@ a:focus-visible, button:focus-visible{
   <div class="wrap nav">
     <a href="index.html" class="brand"><img src="logo.png" alt="Nielvid"> Nielvid</a>
     <ul class="navlinks">
-      <li><a href="about.html" aria-current="page">About</a></li>
-      <li><a href="index.html#services">Services</a></li>
-      <li><a href="index.html#contact">Contact</a></li>
+      <li><a href="about.html" aria-current="page" data-label="About">About</a></li>
+      <li><a href="index.html#services" data-label="Services">Services</a></li>
+      <li><a href="index.html#contact" data-label="Contact">Contact</a></li>
     </ul>
     <div class="nav-cta">
       <a href="index.html#contact" class="btn btn-primary">Book a Call</a>
