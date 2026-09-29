@@ -233,6 +233,77 @@ header{
   aspect-ratio: 1/1.02;
 }
 .hero-art svg{ width:100%; height:100%; }
+/* ---------- Hero video background ---------- */
+.hero-video{
+  --hero-ink:#0a1530;
+  margin-top:-74px;                    /* slide under the floating menu bar */
+  min-height:clamp(620px, 92vh, 880px);
+  padding:170px 0 150px;
+  display:flex; align-items:center;
+  background:var(--hero-ink);
+  color:#fff;
+  isolation:isolate;
+}
+.hero-video .hero-bg{
+  position:absolute; inset:0; z-index:-3;
+  width:100%; height:100%;
+  object-fit:cover;
+}
+/* Layered overlay: dense navy behind the copy, clearing towards the right, soft fade top and bottom */
+.hero-video .hero-shade{
+  position:absolute; inset:0; z-index:-2; pointer-events:none;
+  background:
+    linear-gradient(90deg, rgba(10,21,48,0.92) 0%, rgba(10,21,48,0.80) 34%, rgba(10,21,48,0.42) 62%, rgba(10,21,48,0.18) 100%),
+    linear-gradient(0deg, rgba(10,21,48,0.85) 0%, rgba(10,21,48,0) 32%),
+    linear-gradient(180deg, rgba(10,21,48,0.55) 0%, rgba(10,21,48,0) 22%);
+}
+/* Brand grid, drawn faintly in white over the footage */
+.hero-video .grid-field{
+  z-index:-1;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.055) 1px, transparent 1px);
+  mask-image:linear-gradient(90deg, black 0%, black 40%, transparent 75%);
+  -webkit-mask-image:linear-gradient(90deg, black 0%, black 40%, transparent 75%);
+}
+.hero-video .hero-grid{ grid-template-columns:1fr; width:100%; }
+.hero-video .hero-grid > div{ max-width:640px; }
+.hero-video .eyebrow{ color:#9dbcff; }
+.hero-video .eyebrow::before{ background:#9dbcff; }
+.hero-video h1{ color:#fff; text-shadow:0 2px 24px rgba(0,0,0,0.25); }
+.hero-video .lede{ color:rgba(255,255,255,0.84); font-size:17px; max-width:50ch; }
+.hero-video .btn-ghost{ color:#fff; border-color:rgba(255,255,255,0.45); background:rgba(255,255,255,0.04); backdrop-filter:blur(6px); }
+.hero-video .btn-ghost:hover{ background:rgba(255,255,255,0.14); border-color:#fff; }
+
+/* Bottom strip: sectors + pause control */
+.hero-foot{ position:absolute; left:0; right:0; bottom:0; z-index:2; border-top:1px solid rgba(255,255,255,0.14); }
+.hero-foot-inner{ display:flex; align-items:center; justify-content:space-between; gap:20px; padding-top:18px; padding-bottom:18px; }
+.hero-sectors{ margin:0; display:flex; flex-wrap:wrap; gap:8px 26px; font-size:12.5px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(255,255,255,0.72); }
+.hero-sectors span{ display:inline-flex; align-items:center; gap:10px; }
+.hero-sectors span + span::before{ content:""; width:4px; height:4px; border-radius:50%; background:#9dbcff; margin-left:-16px; }
+.hero-toggle{
+  flex:none; width:40px; height:40px; border-radius:50%;
+  border:1px solid rgba(255,255,255,0.45); background:rgba(255,255,255,0.06);
+  color:#fff; cursor:pointer; display:grid; place-items:center;
+  transition:background .2s, border-color .2s;
+}
+.hero-toggle:hover{ background:rgba(255,255,255,0.16); border-color:#fff; }
+.hero-toggle svg{ width:16px; height:16px; fill:currentColor; }
+.hero-toggle .i-play{ display:none; }
+.hero-toggle[aria-pressed="true"] .i-pause{ display:none; }
+.hero-toggle[aria-pressed="true"] .i-play{ display:block; }
+
+@media (max-width:720px){
+  .hero-video{ margin-top:-64px; min-height:clamp(560px, 88vh, 760px); padding:130px 0 130px; }
+  .hero-video .hero-shade{
+    background:
+      linear-gradient(180deg, rgba(10,21,48,0.70) 0%, rgba(10,21,48,0.78) 55%, rgba(10,21,48,0.92) 100%);
+  }
+  .hero-video .lede{ font-size:16px; }
+  .hero-sectors{ font-size:11px; gap:6px 18px; }
+  .hero-sectors span + span::before{ display:none; }
+}
+
 
 
 /* ---------- Section spacing ---------- */
@@ -835,8 +906,12 @@ a:focus-visible, button:focus-visible{
 <main id="top">
 
   <!-- SECTION 1: HERO -->
-  <section class="hero">
-    <div class="grid-field"></div>
+  <section class="hero hero-video">
+    <video class="hero-bg" autoplay muted loop playsinline preload="auto" poster="media/hero-poster.jpg" aria-hidden="true" tabindex="-1">
+      <source src="media/hero.mp4" type="video/mp4">
+    </video>
+    <div class="hero-shade" aria-hidden="true"></div>
+    <div class="grid-field" aria-hidden="true"></div>
     <div class="wrap hero-grid">
       <div>
         <p class="eyebrow">Nielvid Services Limited</p>
@@ -847,43 +922,14 @@ a:focus-visible, button:focus-visible{
           <a href="#services" class="btn btn-ghost">Explore Services</a>
         </div>
       </div>
-      <div class="hero-art">
-        <svg viewBox="0 0 520 560" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="0.5" y="0.5" width="519" height="559" rx="12" stroke="#0E1E40" stroke-opacity="0.12"/>
-          <!-- rig tower -->
-          <g stroke="#0055FF" stroke-width="2">
-            <line x1="260" y1="70" x2="200" y2="430"/>
-            <line x1="260" y1="70" x2="320" y2="430"/>
-            <line x1="222" y1="180" x2="298" y2="180"/>
-            <line x1="212" y1="260" x2="308" y2="260"/>
-            <line x1="204" y1="340" x2="316" y2="340"/>
-            <line x1="222" y1="180" x2="308" y2="260" stroke-opacity="0.45"/>
-            <line x1="298" y1="180" x2="212" y2="260" stroke-opacity="0.45"/>
-            <line x1="212" y1="260" x2="316" y2="340" stroke-opacity="0.45"/>
-            <line x1="308" y1="260" x2="204" y2="340" stroke-opacity="0.45"/>
-          </g>
-          <rect x="150" y="430" width="220" height="18" fill="#0E1E40"/>
-          <!-- ground / pad -->
-          <rect x="40" y="448" width="440" height="1" stroke="#0E1E40" stroke-opacity="0.15"/>
-          <!-- pipeline -->
-          <g stroke="#0E1E40" stroke-width="1.4" stroke-opacity="0.55">
-            <path d="M20 500 H500" />
-            <circle cx="120" cy="500" r="14" fill="#F7F7F7" stroke="#0055FF"/>
-            <circle cx="360" cy="500" r="14" fill="#F7F7F7" stroke="#0055FF"/>
-          </g>
-          <!-- gauge -->
-          <g transform="translate(70,90)">
-            <circle cx="0" cy="0" r="34" fill="#F7F7F7" stroke="#0055FF" stroke-width="2"/>
-            <line x1="0" y1="0" x2="14" y2="-22" stroke="#0E1E40" stroke-width="2"/>
-            <circle cx="0" cy="0" r="3" fill="#0E1E40"/>
-          </g>
-          <g transform="translate(420,140)">
-            <circle cx="0" cy="0" r="24" fill="#F7F7F7" stroke="#0E1E40" stroke-opacity="0.3" stroke-width="1.4"/>
-            <line x1="0" y1="0" x2="-10" y2="12" stroke="#0055FF" stroke-width="1.6"/>
-          </g>
-          <text x="60" y="500" fill="#0E1E40" fill-opacity="0.4" font-family="DM Sans" font-size="11" letter-spacing="1">SITE-04</text>
-          <text x="400" y="500" fill="#0E1E40" fill-opacity="0.4" font-family="DM Sans" font-size="11" letter-spacing="1">SITE-11</text>
-        </svg>
+    </div>
+    <div class="hero-foot" aria-label="Sectors we serve">
+      <div class="wrap hero-foot-inner">
+        <p class="hero-sectors"><span>Energy</span><span>Oil &amp; Gas</span><span>Marine</span><span>Industrial Operations</span></p>
+        <button class="hero-toggle" type="button" aria-label="Pause background video" aria-pressed="false">
+          <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5h3v14H8zM13 5h3v14h-3z"/></svg>
+          <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+        </button>
       </div>
     </div>
   </section>
@@ -1446,6 +1492,21 @@ a:focus-visible, button:focus-visible{
   var t=false;
   window.addEventListener('scroll', function(){ if(!t){ t=true; requestAnimationFrame(function(){ t=false; update(); }); } }, {passive:true});
   update();
+})();
+</script>
+<script>
+// Hero background video: pause/play control; respect reduced-motion
+(function(){
+  var v=document.querySelector('.hero-bg'), b=document.querySelector('.hero-toggle');
+  if(!v||!b) return;
+  function set(paused){
+    b.setAttribute('aria-pressed', paused?'true':'false');
+    b.setAttribute('aria-label', paused?'Play background video':'Pause background video');
+  }
+  b.addEventListener('click', function(){
+    if(v.paused){ var p=v.play(); if(p&&p.catch) p.catch(function(){}); set(false); } else { v.pause(); set(true); }
+  });
+  if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches){ v.removeAttribute('autoplay'); v.pause(); set(true); }
 })();
 </script>
 </body>
