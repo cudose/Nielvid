@@ -348,6 +348,17 @@ section{ position:relative; }
   border-radius:12px;
 }
 @media (max-width:900px){ .stack-side{ display:none; } }
+/* Left image: kept faint under a navy tint so the service cards stay the focus */
+.stack-side-photo{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  object-fit:cover;
+  filter:saturate(0.6);
+}
+.stack-side-tint{
+  position:absolute; inset:0;
+  background:linear-gradient(180deg, rgba(14,30,64,0.62) 0%, rgba(14,30,64,0.72) 100%);
+}
 
 /* ---------- Section 4: Goal / video / logos ---------- */
 .goal{ text-align:center; padding-bottom:64px; }
@@ -895,7 +906,8 @@ a:focus-visible, button:focus-visible{
       <div class="stack">
         <div class="stack-side">
           <div class="stack-side-img reveal-up">
-            <div class="grid-field" style="mask-image:none; -webkit-mask-image:none;"></div>
+            <img class="stack-side-photo" src="services/offshore-side.jpg" alt="" loading="lazy">
+            <div class="stack-side-tint"></div>
           </div>
         </div>
 
