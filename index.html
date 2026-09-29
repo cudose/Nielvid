@@ -325,6 +325,14 @@ section{ position:relative; }
 /* Photos whose subjects sit low: render taller and shift up so they clear the white panel */
 .svc-photo-lift{ top:-24%; height:124%; }
 .svc-photo-lift-more{ top:-38%; height:138%; }
+/* Stack focus: as the next card slides over, the one beneath blurs and dims (--cover goes 0 → 1, set by script) */
+.stack-card .svc-media, .stack-card .svc-panel{ filter:blur(calc(var(--cover, 0) * 6px)); }
+.stack-card::after{
+  content:""; position:absolute; inset:0; z-index:3;
+  background:rgba(14,30,64,0.6);
+  opacity:var(--cover, 0);
+  pointer-events:none;
+}
 @media (prefers-reduced-motion: reduce){ .svc-photo{ transition:none; } .stack-card:hover .svc-photo{ transform:none; } }
 
 /* White caption panel pinned to the bottom of the card */
@@ -1380,6 +1388,31 @@ a:focus-visible, button:focus-visible{
       .catch(function(err){ if(window.console) console.error('Contact form failed:', err && err.message); say('Sorry, your message could not be sent. Please email us at Info@nielvid.com or call +234 706 751 0255 or +44 7946 146238.','err'); })
       .finally(function(){ btn.disabled=false; btn.textContent='Send message'; });
   });
+})();
+</script>
+<script>
+// Stacked service cards: dim + blur each card as the next one slides over it
+(function(){
+  var cards=[].slice.call(document.querySelectorAll('.stack-card'));
+  if(cards.length<2) return;
+  var ticking=false;
+  function update(){
+    ticking=false;
+    for(var i=0;i<cards.length;i++){
+      var v=0;
+      if(i<cards.length-1){
+        var a=cards[i].getBoundingClientRect(), b=cards[i+1].getBoundingClientRect();
+        v=(a.bottom-b.top)/a.height;
+        v=v<0?0:(v>1?1:v);
+      }
+      v=Math.round(v*100)/100;
+      if(cards[i]._cover!==v){ cards[i]._cover=v; cards[i].style.setProperty('--cover', v); }
+    }
+  }
+  function onScroll(){ if(!ticking){ ticking=true; requestAnimationFrame(update); } }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', onScroll);
+  update();
 })();
 </script>
 </body>
