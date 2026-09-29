@@ -1178,7 +1178,7 @@ a:focus-visible, button:focus-visible{
         <p class="lede">Send us a few details about the manpower, training, or procurement support you need. We'll respond with next steps within one business day.</p>
         <ul class="contact-details">
           <li><strong>Email</strong><a href="mailto:Info@nielvid.com">Info@nielvid.com</a></li>
-          <li><strong>Phone</strong><a href="tel:+447946146238">+44 7946 146238</a> &nbsp;·&nbsp; <a href="tel:+2347067510255">+234 706 751 0255</a></li>
+          <li><strong>Phone</strong><a href="tel:+2347067510255">+234 706 751 0255</a></li>
           <li><strong>Office</strong>Lagos, Nigeria</li>
         </ul>
       </div>
@@ -1262,7 +1262,6 @@ a:focus-visible, button:focus-visible{
           <div class="foot-h">Contact</div>
           <ul class="foot-links">
             <li><a href="mailto:Info@nielvid.com">Info@nielvid.com</a></li>
-            <li><a href="tel:+447946146238">+44 7946 146238</a></li>
             <li><a href="tel:+2347067510255">+234 706 751 0255</a></li>
             <li><span>Lagos, Nigeria</span></li>
           </ul>
@@ -1377,7 +1376,7 @@ a:focus-visible, button:focus-visible{
       body:JSON.stringify(data)
     }).then(function(r){ return r.json().then(function(j){ if(!r.ok || String(j.success)!=='true') throw new Error(j.message||'failed'); }); })
       .then(function(){ form.reset(); say('Thank you — your message has been sent. We\'ll get back to you within one business day.','ok'); })
-      .catch(function(err){ if(window.console) console.error('Contact form failed:', err && err.message); say('Sorry, your message could not be sent. Please email us at Info@nielvid.com or call +44 7946 146238.','err'); })
+      .catch(function(err){ if(window.console) console.error('Contact form failed:', err && err.message); say('Sorry, your message could not be sent. Please email us at Info@nielvid.com or call +234 706 751 0255.','err'); })
       .finally(function(){ btn.disabled=false; btn.textContent='Send message'; });
   });
 })();
