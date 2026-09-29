@@ -324,6 +324,7 @@ section{ position:relative; }
 .stack-card:hover .svc-photo{ transform:scale(1.06); }
 /* Photos whose subjects sit low: render taller and shift up so they clear the white panel */
 .svc-photo-lift{ top:-24%; height:124%; }
+.svc-photo-lift-more{ top:-38%; height:138%; }
 @media (prefers-reduced-motion: reduce){ .svc-photo{ transition:none; } .stack-card:hover .svc-photo{ transform:none; } }
 
 /* White caption panel pinned to the bottom of the card */
@@ -936,7 +937,7 @@ a:focus-visible, button:focus-visible{
 
           <div class="stack-card reveal-up" style="--rd:0.1s">
             <div class="svc-media">
-              <img class="svc-photo svc-photo-lift" src="services/equipment.jpg" alt="Crane, excavator, forklift, generator and manlift on an industrial project site" loading="lazy">
+              <img class="svc-photo svc-photo-lift svc-photo-lift-more" src="services/equipment.jpg" alt="Crane, excavator, forklift, generator and manlift on an industrial project site" loading="lazy">
             </div>
             <div class="svc-panel">
               <h3>Equipment Leasing &amp; Rental</h3>
