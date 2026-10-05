@@ -704,9 +704,15 @@ section{ position:relative; }
 .why-cards-col{ display:flex; flex-direction:column; }
 
 /* ---------- Section 8: Process ---------- */
-.proc-top{ max-width:60ch; margin-bottom:64px; }
-.proc-top h2{ margin-bottom:18px; max-width:16ch; }
-.proc-top .lede{ max-width:58ch; }
+.proc-top{ margin-bottom:48px; }
+.proc-top h2{ margin-bottom:14px; white-space:nowrap; }
+.proc-top .lede{ max-width:62ch; }
+#process.pad{ padding:96px 0; }
+@media (max-width:720px){
+  #process.pad{ padding:72px 0; }
+  .proc-top{ margin-bottom:36px; }
+  .proc-top h2{ white-space:normal; }
+}
 .proc-grid{
   display:grid;
   grid-template-columns:repeat(4,1fr);
