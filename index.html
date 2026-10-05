@@ -379,7 +379,8 @@ section{ position:relative; }
   overflow:hidden;
   box-shadow: 0 14px 28px -18px rgba(14,30,64,0.28);
 }
-@media (max-width:640px){ .stack-card{ height:auto; aspect-ratio:4/5; } }
+/* Phones: card grows with its text, always keeping a strip of photo above the panel */
+@media (max-width:640px){ .stack-card{ height:auto; padding:220px 14px 14px; } }
 /* All cards pin at the same line as the left image, so each new card covers the last one in sync */
 .stack-card{ top:110px; margin-bottom:20px; }
 .stack-card:last-child{ margin-bottom:0; }
@@ -416,7 +417,7 @@ section{ position:relative; }
   border-radius:8px;
   padding:26px 28px;
 }
-@media (max-width:640px){ .svc-panel{ left:14px; right:14px; bottom:14px; padding:20px; } }
+@media (max-width:640px){ .svc-panel{ position:relative; left:auto; right:auto; bottom:auto; padding:20px; } }
 .svc-panel h3{ font-size:clamp(20px, 2vw, 24px); margin-bottom:8px; font-weight:700; }
 .svc-panel p{ color:var(--muted); font-size:15px; line-height:1.55; margin:0; }
 
@@ -1018,7 +1019,7 @@ a:focus-visible, button:focus-visible{
             </div>
             <div class="svc-panel">
               <h3>Procurement &amp; Supply Chain</h3>
-              <p>We source engineering materials, equipment, spares, PPE/HSE items and chemicals from vetted vendors and OEMs, then handle expediting and logistics coordination so the right items reach site on time, fully documented.</p>
+              <p>We source and supply engineering materials, equipment, spares, PPE and HSE products, chemicals, piping and pipeline components, electrical and instrumentation equipment, industrial tools, lifting and marine accessories, and OEM parts, with end-to-end vendor sourcing, expediting, documentation and logistics coordination.</p>
             </div>
           </div>
 
