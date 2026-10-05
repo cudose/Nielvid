@@ -125,75 +125,65 @@ p{margin:0;}
 }
 
 /* ---------- Header ---------- */
+html{ scroll-padding-top:96px; }
 header{
   position:sticky;
-  top: 0;
+  top:0;
   z-index:100;
-  padding: max(16px, env(safe-area-inset-top,0px)) 24px 0;
-  background:transparent;
-  pointer-events:none;
+  background:#fff;
+  border-bottom:1px solid var(--line);
+  padding-top:env(safe-area-inset-top,0px);
+  transition:box-shadow .3s ease;
 }
-@media (max-width:720px){ header{ padding:14px 16px 0; } }
+header:has(.nav-scrolled){ box-shadow:0 10px 24px -18px rgba(14,30,64,0.35); }
 .nav{
   display:flex;
   align-items:center;
-  justify-content:space-between;
-  height:58px;
-  max-width:1240px;
-  margin:0 auto;
-  background:rgba(255,255,255,0.92);
-  backdrop-filter:saturate(160%) blur(14px);
-  border:1px solid var(--line-soft);
-  border-radius:999px;
-  box-shadow: none;
-  padding:0 8px 0 22px;
-  pointer-events:auto;
-  transition: box-shadow 0.35s ease;
+  height:84px;
+  transition:height .3s ease;
 }
-.nav.nav-scrolled{
-  box-shadow: 0 12px 26px -16px rgba(14,30,64,0.2), 0 2px 8px rgba(14,30,64,0.05);
-}
+.nav.nav-scrolled{ height:70px; }
 @media (max-width:720px){
-  .nav{ height:50px; padding:0 6px 0 16px; }
+  .nav{ height:68px; }
+  .nav.nav-scrolled{ height:60px; }
 }
-.brand{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  font-weight:600;
-  font-size:14px;
-  letter-spacing:-0.01em;
-  text-decoration:none;
-  color:var(--ink);
+.brand{ display:flex; align-items:center; text-decoration:none; flex:none; }
+.brand img{ height:52px; width:auto; display:block; transition:height .3s ease; }
+.nav.nav-scrolled .brand img{ height:44px; }
+@media (max-width:720px){
+  .brand img{ height:36px; }
+  .nav.nav-scrolled .brand img{ height:32px; }
 }
-/* Show only the blue icon from the full logo (its white wordmark is invisible on the light nav) */
-.brand img{ height:22px; width:21px; object-fit:cover; object-position:left center; }
 .navlinks{
   display:flex;
-  gap:28px;
+  gap:40px;
   list-style:none;
-  margin:0; padding:0;
-  font-size:13.5px;
-  font-weight:500;
+  margin:0 36px 0 auto; padding:0;
+  font-size:15px;
+  font-weight:600;
 }
 .navlinks a{
-  text-decoration:none; color:var(--ink); opacity:0.75;
-  transition:color .2s, opacity .2s;
+  text-decoration:none; color:var(--ink);
+  transition:color .2s;
   display:inline-flex; flex-direction:column; align-items:center;
-  text-underline-offset:6px; text-decoration-thickness:2px;
+  text-underline-offset:8px; text-decoration-thickness:2px;
 }
 /* invisible bold copy reserves the bold width so neighbouring links don't shift */
-.navlinks a::after{ content:attr(data-label); font-weight:600; height:0; visibility:hidden; overflow:hidden; }
+.navlinks a::after{ content:attr(data-label); font-weight:700; height:0; visibility:hidden; overflow:hidden; }
 .navlinks a:hover,
 .navlinks a.is-active,
 .navlinks a[aria-current="page"]{
-  opacity:1; color:var(--brand); font-weight:600; text-decoration:underline;
+  color:var(--brand); font-weight:700; text-decoration:underline;
 }
 .nav-cta{ display:flex; align-items:center; gap:18px; }
-.nav-cta .btn-primary{ border-radius:999px; padding:9px 18px; font-size:13px; }
+.nav-cta .btn-primary{ border-radius:999px; padding:12px 24px; font-size:14px; font-weight:600; }
 .burger{ display:none; }
 @media (max-width: 900px){
   .navlinks{ display:none; }
+  .nav-cta{ margin-left:auto; }
+}
+@media (max-width:720px){
+  .nav-cta .btn-primary{ padding:10px 18px; font-size:13px; }
 }
 
 /* ---------- Blueprint grid background ---------- */
@@ -844,7 +834,7 @@ a:focus-visible, button:focus-visible{
 
 <header>
   <div class="wrap nav">
-    <a href="index.html" class="brand"><img src="logo.png" alt="Nielvid"> Nielvid</a>
+    <a href="index.html" class="brand"><img src="logo-dark.png" alt="Nielvid Services Limited" width="934" height="284"></a>
     <ul class="navlinks">
       <li><a href="about.html" aria-current="page" data-label="About">About</a></li>
       <li><a href="index.html#services" data-label="Services">Services</a></li>
