@@ -694,9 +694,11 @@ section{ position:relative; }
 .why-cards-col{ display:flex; flex-direction:column; }
 
 /* ---------- Section 8: Process ---------- */
-.proc-top{ margin-bottom:48px; }
+.proc-top{ margin-bottom:48px; width:fit-content; max-width:100%; }
 .proc-top h2{ margin-bottom:14px; white-space:nowrap; }
-.proc-top .lede{ max-width:62ch; }
+/* paragraph wraps to (just about) the heading's width, avoiding a lone last word */
+.proc-top .lede{ width:0; min-width:calc(100% + 36px); max-width:none; text-wrap:pretty; }
+@media (max-width:720px){ .proc-top .lede{ min-width:100%; } }
 #process.pad{ padding:96px 0; }
 @media (max-width:720px){
   #process.pad{ padding:72px 0; }
